@@ -31,21 +31,18 @@ func goToProtoCompatibleStruct(v interface{}) interface{} {
 			"x":     x.X,
 			"y":     x.Y,
 			"z":     x.Z,
-			"_type": typeAngularVelocity,
 		}
 	case r3.Vector:
 		return map[string]interface{}{
 			"x":     x.X,
 			"y":     x.Y,
 			"z":     x.Z,
-			"_type": typeVector3,
 		}
 	case *spatialmath.EulerAngles:
 		return map[string]interface{}{
 			"roll":  x.Roll,
 			"pitch": x.Pitch,
 			"yaw":   x.Yaw,
-			"_type": typeEuler,
 		}
 	case *spatialmath.Quaternion:
 		return map[string]interface{}{
@@ -53,7 +50,6 @@ func goToProtoCompatibleStruct(v interface{}) interface{} {
 			"i":     x.Imag,
 			"j":     x.Jmag,
 			"k":     x.Kmag,
-			"_type": typeQuat,
 		}
 	case *spatialmath.OrientationVector:
 		return map[string]interface{}{
@@ -61,7 +57,6 @@ func goToProtoCompatibleStruct(v interface{}) interface{} {
 			"ox":    x.OX,
 			"oy":    x.OY,
 			"oz":    x.OZ,
-			"_type": typeOrientationVector,
 		}
 	case *spatialmath.OrientationVectorDegrees:
 		return map[string]interface{}{
@@ -69,7 +64,6 @@ func goToProtoCompatibleStruct(v interface{}) interface{} {
 			"ox":    x.OX,
 			"oy":    x.OY,
 			"oz":    x.OZ,
-			"_type": typeOrientationVectorDegrees,
 		}
 	case *spatialmath.R4AA:
 		return map[string]interface{}{
@@ -77,7 +71,6 @@ func goToProtoCompatibleStruct(v interface{}) interface{} {
 			"rx":    x.RX,
 			"ry":    x.RY,
 			"rz":    x.RZ,
-			"_type": typeAxisAngle,
 		}
 	case spatialmath.Orientation:
 		deg := x.OrientationVectorDegrees()
@@ -86,13 +79,11 @@ func goToProtoCompatibleStruct(v interface{}) interface{} {
 			"ox":    deg.OX,
 			"oy":    deg.OY,
 			"oz":    deg.OZ,
-			"_type": typeOrientationVectorDegrees,
 		}
 	case *geo.Point:
 		return map[string]interface{}{
 			"lat":   x.Lat(),
 			"lng":   x.Lng(),
-			"_type": typeGeopoint,
 		}
 	default:
 		return v

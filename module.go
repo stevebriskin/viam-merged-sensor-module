@@ -81,9 +81,11 @@ arm: ['JointPositions', 'EndPosition'],
 board: ['Analogs', 'Gpios'],
 encoder: ['TicksCount'],
 gantry: ['Position', 'Lengths'],
-motor: ['Position', 'IsPowered'],
-movement_sensor: [
+servo: ['Position'],
 
+DONE
+motor: ['Position', 'IsPowered'], - Done
+movement_sensor: [
 	'Readings',
 	'AngularVelocity',
 	'CompassHeading',
@@ -91,36 +93,36 @@ movement_sensor: [
 	'LinearVelocity',
 	'Orientation',
 	'Position',
-
 ], - DONE
 power_sensor: ['Readings', 'Voltage', 'Current', 'Power'], - DONE
-servo: ['Position'],
 sensor: ['Readings'], - DONE
 */
 
 func (ms *MergedSensor) Readings(ctx context.Context, extra map[string]interface{}) (map[string]interface{}, error) {
 	toReturn := map[string]interface{}{}
 
-	// attempt to generalize a common pattern for capture methods that return (value, error)
-	collect := func(reso resource.Resource, methods []string) {
-		for _, method := range methods {
-			result, err := invoke(reso, method, ctx, extra)
-			if err == nil {
-				toReturn[reso.Name().ShortName()+":"+method] = result
-			} else {
-				ms.logger.Warn(err)
+	for _, r := range ms.dependencies {
+		values := map[string]interface{}{}
+
+		// attempt to generalize a common pattern for capture methods that return the (value, error) pair
+		collect := func(reso resource.Resource, methods []string) {
+			for _, method := range methods {
+				result, err := invoke(reso, method, ctx, extra)
+				if err == nil {
+					values[method] = result
+				} else {
+					ms.logger.Debug(fmt.Errorf("error calling method %s on resource %s: %w", method, reso.Name().ShortName(), err))
+				}
 			}
 		}
-	}
 
-	for _, r := range ms.dependencies {
 		switch t := r.(type) {
 		case motor.Motor:
 			collect(t, []string{"Position"})
 
 			// IsPowered returns multiple values
 			if isOn, powerPct, err := t.IsPowered(ctx, extra); err == nil {
-				toReturn[t.Name().ShortName()+":IsPowered"] = map[string]interface{}{
+				values["IsPowered"] = map[string]interface{}{
 					"is_on":     isOn,
 					"power_pct": powerPct,
 				}
@@ -139,7 +141,7 @@ func (ms *MergedSensor) Readings(ctx context.Context, extra map[string]interface
 
 			// Position returns multiple values, needs to be handled differently
 			if point, altitude, err := t.Position(ctx, extra); err == nil {
-				toReturn[t.Name().ShortName()+":Position"] = map[string]interface{}{
+				values["Position"] = map[string]interface{}{
 					"coordinate": point,
 					"altitude_m": altitude,
 				}
@@ -150,25 +152,25 @@ func (ms *MergedSensor) Readings(ctx context.Context, extra map[string]interface
 
 			//Voltage and Current need special handling
 			if volts, isAc, err := t.Voltage(ctx, extra); err == nil {
-				toReturn[t.Name().ShortName()+":Voltage"] = map[string]interface{}{
+				values["Voltage"] = map[string]interface{}{
 					"volts": volts,
 					"is_ac": isAc,
 				}
 			}
 			if amperes, isAc, err := t.Voltage(ctx, extra); err == nil {
-				toReturn[t.Name().ShortName()+":Current"] = map[string]interface{}{
+				values["Current"] = map[string]interface{}{
 					"amperes": amperes,
 					"isAc":    isAc,
 				}
 			}
-
 		case sensor.Sensor:
-			methods := []string{"Readings"}
-			collect(t, methods)
+			collect(t, []string{"Readings"})
 
 		default:
 			ms.logger.Info("Type not supported: ", ms)
 		}
+
+		toReturn[r.Name().ShortName()] = values
 	}
 
 	return cleanReading(toReturn), nil
