@@ -1,6 +1,6 @@
 {
   "module_id": "stevebriskin:combined-sensor",
-  "visibility": "private",
+  "visibility": "public",
   "url": "https://github.com/stevebriskin/viam-merged-sensor-module",
   "description": "A sensor wrapper that combines readings from other viam components (e.g. sensor, movement sensor, motor) for data capture purposes. Correlating related data after capture is hard, this module combines them before storing.",
   "models": [
