@@ -115,9 +115,9 @@ All methods will be collected for each configured resource. In the future it wil
 ## Credits and History
 
 Lord of the Sensors
-```
-It all began with the forging of the Great Sensors. Three were given to the Data engineers; immortal, wisest and fairest of all engineers. Seven, to the Fleet engineers, great thinkers and craftsmen of the cloud. And nine, nine sensors were gifted to the SDK/Netcode engineers, who above all else desire connectivity. For within these sensors was bound the strength and the will to govern over each domain. But they were all deceived, for another sensor was made. In the land of RDK, in the fires of Mount Bucket, the Dark Lord Briskin forged in secret, a master sensor, to control all others. And into this sensor he poured all his skills, his malice and his will to dominate all data. One sensor to rule them all.
-```
+
+> It all began with the forging of the Great Sensors. Three were given to the Data engineers; immortal, wisest and fairest of all engineers. Seven, to the Fleet engineers, great thinkers and craftsmen of the cloud. And nine, nine sensors were gifted to the SDK/Netcode engineers, who above all else desire connectivity. For within these sensors was bound the strength and the will to govern over each domain. But they were all deceived, for another sensor was made. In the land of RDK, in the fires of Mount Bucket, the Dark Lord Briskin forged in secret, a master sensor, to control all others. And into this sensor he poured all his skills, his malice and his will to dominate all data. One sensor to rule them all.
+
 -- [@npmenard]([url](https://github.com/npmenard))
 
 Credit to [@abe-winter]([url](https://github.com/abe-winter)) for the idea
