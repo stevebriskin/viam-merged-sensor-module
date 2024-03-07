@@ -22,7 +22,7 @@ Normally, you would capture and store separate GPS and temperature sensor readin
     "temp": 23.95
   }
 }
-```json
+```
 
 By using this module, you can store both pieces of data on the same document, make it trivial to associate the temperature reading to the location.
 ```json
@@ -98,6 +98,8 @@ Assuming there are configured `movement_sensor`, `sensor`, `power_sensor`, and `
       ]
     }
 ```
+
+<img width="742" alt="Screenshot 2024-03-06 at 10 15 55 PM" src="https://github.com/stevebriskin/viam-merged-sensor-module/assets/1838886/ac87fc90-93b2-4168-9732-780019892367">
 
 ## Features and Limitations
 
