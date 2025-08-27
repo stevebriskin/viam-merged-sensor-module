@@ -125,4 +125,3 @@ Credit to [@abe-winter]([url](https://github.com/abe-winter)) for the idea
 ## License
 Copyright 2021-2024 Viam Inc. <br>
 Apache 2.0
-
